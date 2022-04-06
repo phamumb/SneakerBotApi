@@ -1,16 +1,18 @@
 import { Task } from './entities/task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Repository } from 'typeorm';
-import * as puppeteer from 'puppeteer';
+import { AppContextService } from '../appcontext.service';
+
 
 @Injectable()
 export class TasksService {
   constructor(
     @InjectRepository(Task)
-    private taskRepository: Repository<Task>
+    private taskRepository: Repository<Task>,
+    private context: AppContextService
   ) {
 
   }
@@ -34,9 +36,7 @@ export class TasksService {
     return this.taskRepository.delete({id: id});
   }
 
-  start(id: number) {
-    puppeteer.launch({
-      product: 'firefox',
-    })
+  async start(id: number) {
+    await this.context.start();
   }
 }
