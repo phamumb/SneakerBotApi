@@ -1,11 +1,13 @@
-import { Task } from './entities/task.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { AppContextService } from '../core/services/app-context.service';
 import { Inject, Injectable } from '@nestjs/common';
+import { BaseSite } from "./../core/utils/sites/base.site";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Repository } from 'typeorm';
-import { AppContextService } from '../appcontext.service';
-
+import { Task } from './entities/task.entity';
+import Sites from '../core/utils/sites';
 
 @Injectable()
 export class TasksService {
@@ -37,6 +39,6 @@ export class TasksService {
   }
 
   async start(id: number) {
-    await this.context.start();
+    this.context.queue();
   }
 }
