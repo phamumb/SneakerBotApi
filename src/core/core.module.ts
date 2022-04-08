@@ -9,5 +9,6 @@ import { Module } from '@nestjs/common';
     imports: [],
     controllers: [],
     providers: [AppContextService],
+    exports: [AppContextService]
 })
 export class CoreModule {}

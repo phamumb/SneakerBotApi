@@ -33,7 +33,7 @@ export class TasksController {
   }
 
   @Get(':id/start')
-  start(@Param(':id') id: string) {
-    return this.tasksService.start(+id);
+  async start(@Param(':id') id: string) {
+    return await this.tasksService.start(+id);
   }
 }

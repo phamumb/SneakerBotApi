@@ -14,6 +14,6 @@ import { TasksModule } from './tasks/tasks.module';
     ProxiesModule,
     TasksModule,
   ],
-  providers: [AppContextService]
+  providers: []
 })
 export class AppModule { }

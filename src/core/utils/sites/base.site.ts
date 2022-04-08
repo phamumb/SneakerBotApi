@@ -1,5 +1,7 @@
 import { Page } from "playwright";
 
 export interface BaseSite {
-    checkout();
+    addToCart(page);
+    checkout(page);
+    process(page);
 }

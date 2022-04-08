@@ -12,9 +12,9 @@ import Sites from '../core/utils/sites';
 @Injectable()
 export class TasksService {
   constructor(
+    private appContext: AppContextService,
     @InjectRepository(Task)
     private taskRepository: Repository<Task>,
-    private context: AppContextService
   ) {
 
   }
@@ -39,6 +39,6 @@ export class TasksService {
   }
 
   async start(id: number) {
-    this.context.queue();
+    await this.appContext.queue(id);
   }
 }
