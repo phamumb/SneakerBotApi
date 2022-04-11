@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Card } from './../../cards/entities/card.entity';
+import { Task } from "src/models/tasks/entities/task.entity";
+import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Address {
@@ -20,4 +22,10 @@ export class Address {
     country: string;
     @Column({ nullable: true })
     zipCode: string;
+    @OneToMany(() => Card, card => card.address)
+    @JoinTable()
+    card: Card[];
+    @OneToMany(() => Task, task => task.shippingAddress)
+    @JoinTable()
+    task: Task[];
 }

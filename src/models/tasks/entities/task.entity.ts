@@ -2,7 +2,7 @@
 import { Account } from "src/models/accounts/entities/account.entity";
 import { Address } from "src/models/addresses/entities/address.entity";
 import { Card } from "src/models/cards/entities/card.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Task {
@@ -20,17 +20,15 @@ export class Task {
     size: string;
     @Column({ nullable: true })
     shippingIndex: number;
-    @ManyToOne(() => Address)
-    @JoinColumn()
-    billingAddress: Address;
-    @OneToOne(() => Address)
+    @ManyToOne(() => Address, { eager: true })
     @JoinColumn()
     shippingAddress: Address;
-    @OneToOne(() => Account)
+    @ManyToOne(() => Account, { eager: true })
     @JoinColumn()
     account: Account;
-    @OneToOne(() => Card)
+    @ManyToOne(() => Card, { eager: true })
+    @JoinTable()
     card: Card;
-    @Column({default: false})
+    @Column({ default: false })
     isProcessed: boolean;
 }

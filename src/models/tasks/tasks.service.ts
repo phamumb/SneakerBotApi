@@ -22,11 +22,11 @@ export class TasksService {
   }
 
   findAll() {
-    return this.taskRepository.find({ relations: ['billingAddress']});
+    return this.taskRepository.find();
   }
 
   findOne(id: number) {
-    return this.taskRepository.findOne({ id: id }, {relations: []});
+    return this.taskRepository.findOne({ id: id });
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
@@ -43,7 +43,7 @@ export class TasksService {
 
   async start(id: number) {
     let task = await this.taskRepository.findOne({ id: id });
-    await this.appContext.process({ task: task});
+    await this.appContext.process(task);
   }
 
   async stop(id: number) {

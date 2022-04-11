@@ -1,9 +1,8 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
+
 import { Injectable } from '@nestjs/common';
 import { firefox } from 'playwright';
 import { PuppeteerNodeLaunchOptions } from 'puppeteer';
+import { Task } from 'src/models/tasks/entities/task.entity';
 import Sites from '../utils/sites';
 import { BaseSite } from './../utils/sites/base.site';
 
@@ -25,7 +24,7 @@ export class AppContextService {
   private _cluster: any[] = [];
   constructor() {}
 
-  async process({ task }) {
+  async process(task: Task) {
     const browser = await firefox.launch(this._options);
     const context = await browser.newContext({ viewport: null });
     const page = await context.newPage();
@@ -34,12 +33,11 @@ export class AppContextService {
     });
     var site = new Sites[task.siteId]() as BaseSite;
     this._cluster.push({ id: task.id, page: page });
-    await site.process(page);
+    await site.process(page, task);
   }
 
   async terminate(task) {
     let e = this._cluster.find((x) => x.id == task.id);
-    console.log(task);
     if (e) {
       e.page.close();
       var index = this._cluster.indexOf(e);
