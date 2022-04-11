@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AddressesModule } from './addresses/addresses.module';
 import { CoreModule } from './core/core.module';
-import { AppContextService } from './core/services/app-context.service';
-import { ProxiesModule } from './proxies/proxies.module';
-import { TasksModule } from './tasks/tasks.module';
+import { AccountsModule } from './models/accounts/accounts.module';
+import { AddressesModule } from './models/addresses/addresses.module';
+import { CardsModule } from './models/cards/cards.module';
+import { ProxiesModule } from './models/proxies/proxies.module';
+import { TasksModule } from './models/tasks/tasks.module';
+
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { TasksModule } from './tasks/tasks.module';
     AddressesModule,
     ProxiesModule,
     TasksModule,
+    AccountsModule,
+    CardsModule
   ],
   providers: []
 })

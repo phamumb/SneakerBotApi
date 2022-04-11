@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -7,9 +16,15 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-  @Post()
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.create(createTaskDto);
+
+  @Get('/:id/start')
+  async start(@Param('id') id: string) {
+    return await this.tasksService.start(+id);
+  }
+
+  @Get('/:id/stop')
+  async stop(@Param('id') id: string) {
+    return await this.tasksService.stop(+id);
   }
 
   @Get()
@@ -17,9 +32,20 @@ export class TasksController {
     return this.tasksService.findAll();
   }
 
+  @Get('/sites')
+  getSites() {
+    return this.tasksService.getSites();
+  }
+
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.tasksService.findOne(+id);
+  }
+
+  @Post()
+  create(@Body() createTaskDto: CreateTaskDto) {
+    return this.tasksService.create(createTaskDto);
   }
 
   @Put(':id')
@@ -32,8 +58,4 @@ export class TasksController {
     return this.tasksService.remove(+id);
   }
 
-  @Get(':id/start')
-  async start(@Param(':id') id: string) {
-    return await this.tasksService.start(+id);
-  }
 }
